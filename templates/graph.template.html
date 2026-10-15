@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__GRAPH_TITLE__</title>
+<style>
+:root{--bg:#fff;--ink:#1a1a1a;--muted:#666;--rule:#e6e6e6;--accent:#1f4d7a;--soft:#f6f8fb;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16171a;--ink:#e8e6e1;--muted:#a09c95;--rule:#33363c;--accent:#8fbde8;--soft:#1d1f23}}
+:root[data-theme="dark"]{--bg:#16171a;--ink:#e8e6e1;--muted:#a09c95;--rule:#33363c;--accent:#8fbde8;--soft:#1d1f23}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;margin:0 0 4px}.meta{color:var(--muted);font-size:12.5px;margin-bottom:24px}
+h2{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:28px 0 8px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;vertical-align:top;padding:7px 9px;border-bottom:1px solid var(--rule)}
+th{font-size:12px;color:var(--muted);font-weight:600}td.id{font-family:ui-monospace,Menlo,monospace;font-size:12px;white-space:nowrap}
+.stage{display:inline-block;min-width:18px;text-align:center;border-radius:9px;background:var(--soft);padding:0 6px}
+.note{color:var(--muted);font-size:12.5px}.links li{margin:2px 0}.empty{color:var(--muted)}
+</style></head><body><div class="wrap">
+<h1 id="title"></h1><div class="meta" id="meta"></div>
+<div id="groups"></div><h2>Links</h2><ul class="links" id="links"></ul>
+</div><script>
+const DATA = __GRAPH_DATA__;
+const esc=s=>String(s==null?'':s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const nodes=DATA.nodes||[],links=DATA.links||[];
+const title=DATA.title||DATA.project||'Knowledge graph';
+document.title=title;
+document.getElementById('title').textContent=title;
+document.getElementById('meta').textContent=['Updated '+(DATA.updated||'never'),nodes.length+' nodes'].concat(DATA.stages?['stages: '+DATA.stages]:[]).join(' · ');
+const byType={};nodes.forEach(n=>(byType[n.type||'other']=byType[n.type||'other']||[]).push(n));
+let h='';for(const t of Object.keys(byType)){h+='<h2>'+esc(t)+'</h2><div class="scroll"><table><tr><th>id</th><th>what</th><th>stage</th><th>owed</th><th>next</th><th>updated</th></tr>';
+for(const n of byType[t])h+='<tr><td class="id">'+esc(n.id)+'</td><td>'+esc(n.label)+(n.note?'<div class="note">'+esc(n.note)+'</div>':'')+'</td><td><span class="stage">'+esc(n.stage)+'</span></td><td>'+esc(n.owed)+'</td><td>'+esc(n.next)+'</td><td>'+esc(n.updated)+'</td></tr>';h+='</table></div>';}
+document.getElementById('groups').innerHTML=h||'<p class="empty">No nodes yet.</p>';
+document.getElementById('links').innerHTML=links.length?links.map(l=>'<li><b>'+esc(l.s)+'</b> '+esc(l.k)+' <b>'+esc(l.t)+'</b></li>').join(''):'<li class="empty">No links yet.</li>';
+</script></body></html>

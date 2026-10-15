@@ -1,0 +1,15 @@
+{
+  "name": "checkpoint",
+  "owner": {
+    "name": "David Phipps"
+  },
+  "description": "The checkpoint plugin for Claude Code.",
+  "plugins": [
+    {
+      "name": "checkpoint",
+      "source": "./",
+      "description": "Save a project checkpoint: a validated knowledge graph in docs/graph.json, a generated HTML view of it, and a clean, dated session log.",
+      "version": "1.0.0"
+    }
+  ]
+}

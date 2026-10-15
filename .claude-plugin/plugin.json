@@ -1,0 +1,10 @@
+{
+  "name": "checkpoint",
+  "version": "1.0.0",
+  "description": "Save a project checkpoint: a validated knowledge graph in docs/graph.json, a generated HTML view of it, and a clean, dated session log.",
+  "author": { "name": "David Phipps" },
+  "homepage": "https://github.com/dphipps4/claude-checkpoint",
+  "repository": "https://github.com/dphipps4/claude-checkpoint",
+  "license": "MIT",
+  "keywords": ["checkpoint", "session-log", "knowledge-graph", "handoff", "project-state"]
+}
